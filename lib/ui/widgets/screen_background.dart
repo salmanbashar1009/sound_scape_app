@@ -21,6 +21,7 @@ class ScreenBackground extends StatelessWidget {
           color: CupertinoColors.black.withOpacity(0.15),
         ),
         SafeArea(child: child)
+
       ],
     );
   }

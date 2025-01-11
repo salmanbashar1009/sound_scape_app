@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sound_scape_app/state_managers/category_controller.dart';
 import 'package:sound_scape_app/state_managers/play_toggle_button_controller.dart';
 import 'package:sound_scape_app/ui/widgets/bottom_nav_bar.dart';
 import 'package:sound_scape_app/ui/widgets/category_bar.dart';
@@ -10,7 +9,6 @@ import 'package:sound_scape_app/ui/widgets/play_toggle_button.dart';
 import 'package:sound_scape_app/ui/widgets/screen_background.dart';
 import 'package:sound_scape_app/ui/widgets/notched_tab_bar.dart';
 import 'package:sound_scape_app/ui/widgets/sound_grid_view.dart';
-
 import '../../state_managers/search_icon_controller.dart';
 
 class SoundSelectionScreen extends StatelessWidget {
@@ -38,12 +36,11 @@ class SoundSelectionScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           controller.isSelected ? Divider(color: const Color.fromRGBO(9, 0, 31, 1)) : CategoryBar(),
-                          SoundGridView()
+                          SoundGridView(),
                         ],
                       ),
                     ),
                   ),
-                  BottomNavBar(),
                 ],
               ),
               GetBuilder<PlayToggleButtonController>(builder: (controller){
@@ -53,6 +50,7 @@ class SoundSelectionScreen extends StatelessWidget {
           );
         })
       ),
+      bottomNavigationBar:  BottomNavBar(),
     );
   }
 }

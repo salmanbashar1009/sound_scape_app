@@ -3,11 +3,14 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sound_scape_app/state_managers/search_icon_controller.dart';
+import 'package:sound_scape_app/state_managers/sound_filter_controller/all_sound_filter_controller.dart';
 
 class HeaderSection extends StatelessWidget {
    HeaderSection({super.key});
 
  SearchIconController  controller = Get.put(SearchIconController());
+ AllSoundFilterController allSoundFilterController = Get.put(AllSoundFilterController());
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -51,6 +54,7 @@ class HeaderSection extends StatelessWidget {
                     ),
                     onPressed: () {
                       controller.onTapSearchBar();
+                     allSoundFilterController.onInit();
 
                     },
                   ),

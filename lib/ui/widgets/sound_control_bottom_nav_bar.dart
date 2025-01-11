@@ -2,38 +2,38 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sound_scape_app/state_managers/active_sound_controller.dart';
 import 'package:sound_scape_app/state_managers/play_toggle_button_controller.dart';
+import 'package:sound_scape_app/ui/widgets/show_save_mix_sheet.dart';
 
 class SoundControlBottomNavBar extends StatelessWidget {
   const SoundControlBottomNavBar({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(24),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          _buildControlButton(
-            icon: Icons.save,
-            label: 'Save',
-            onPressed: () {
-              // Implement save functionality
+    return Row (
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _buildControlButton(
+          icon: Icons.save,
+          label: 'Save',
+          onPressed: () {
+            showSaveMixSheet(context);
+          },
+        ),
+        GetBuilder<PlayToggleButtonController>(
+          builder: (controller) => _buildControlButton(
+            icon: controller.isPlay ? Icons.pause : Icons.play_arrow,
+            label: controller.isPlay ? 'Pause' : 'Play',
+            onPressed: (){
+              controller.playSound();
             },
           ),
-          GetBuilder<PlayToggleButtonController>(
-            builder: (controller) => _buildControlButton(
-              icon: controller.isSelected ? Icons.pause : Icons.play_arrow,
-              label: controller.isSelected ? 'Pause' : 'Play',
-              onPressed: controller.playSound,
-            ),
-          ),
-          _buildControlButton(
-            icon: Icons.close,
-            label: 'Clear All',
-            onPressed: Get.find<ActiveSoundController>().clearAll,
-          ),
-        ],
-      ),
+        ),
+        _buildControlButton(
+          icon: Icons.close,
+          label: 'Clear All',
+          onPressed: Get.find<ActiveSoundController>().clearAll,
+        ),
+      ],
     );
   }
   Widget _buildControlButton({

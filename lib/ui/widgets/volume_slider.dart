@@ -6,62 +6,62 @@ import 'package:sound_scape_app/state_managers/active_sound_controller.dart';
 final ActiveSoundController activeSoundController = Get.find<ActiveSoundController>();
 
 Widget volumeSlider(SoundItem item, int index) {
-  return Container(
-    margin: EdgeInsets.only(bottom: 12),
-    decoration: BoxDecoration(
-      color: Color(0xFF3A1266),
-      borderRadius: BorderRadius.circular(30),
-    ),
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 5.0),
     child: Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(
-            color: Color(0xFF6B28B8),
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Text(
-            item.soundTitle,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w500,
-            ),
+        Flexible(
+          flex: 9,
+          child: Stack(
+            children: [
+              SliderTheme(
+                data: SliderThemeData(
+                  trackHeight: 30,
+                  thumbColor: Colors.white,
+                  activeTrackColor: Color(0xFFB53FFE),
+                  inactiveTrackColor: Colors.white.withOpacity(0.1),
+                  overlayColor: Color(0xFF020725),
+                  thumbShape: RoundSliderThumbShape(
+                    enabledThumbRadius: 16,
+                  ),
+                  overlayShape: RoundSliderOverlayShape(
+                    overlayRadius: 16,
+                  ),
+                ),
+                child: Slider(
+                  value: item.volume,
+                  onChanged: (value) {
+                    return activeSoundController.updateVolume(index, value);
+                  },
+                ),
+              ),
+              Positioned(
+                left: item.volume < 0.15 ? 230 : 30,
+                  top: 6,
+                  child: Text(item.soundTitle,style: TextStyle(color: Colors.white.withOpacity(0.6)),))
+      ]
           ),
         ),
-        Expanded(
-          child: SliderTheme(
-            data: SliderThemeData(
-              trackHeight: 4,
-              thumbColor: Colors.white,
-              activeTrackColor: Color(0xFF6B28B8),
-              inactiveTrackColor: Colors.white.withOpacity(0.2),
-              overlayColor: Colors.white.withOpacity(0.1),
-              thumbShape: RoundSliderThumbShape(
-                enabledThumbRadius: 8,
-              ),
-              overlayShape: RoundSliderOverlayShape(
-                overlayRadius: 16,
-              ),
+
+        Flexible(
+          flex:1,
+          child: Container(
+            width: 32,
+            height: 32,
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
             ),
-            child: Slider(
-              value: item.volume,
-              onChanged: (value) => activeSoundController.updateVolume(index, value),
+            child: IconButton(
+              icon: Icon(Icons.cancel, color: Colors.white.withOpacity(0.5), size: 16),
+              onPressed: () => activeSoundController.removeSound(index),
+              padding: EdgeInsets.all(8),
             ),
-          ),
-        ),
-        Container(
-          margin: EdgeInsets.only(right: 8),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white.withOpacity(0.1),
-          ),
-          child: IconButton(
-            icon: Icon(Icons.close, color: Colors.white, size: 20),
-            onPressed: () => activeSoundController.removeSound(index),
-            padding: EdgeInsets.all(8),
           ),
         ),
       ],
     ),
   );
 }
+
